@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  /* NOVA — warm dusk palette */
+  --background: #f7f3ec;
+  --foreground: #25221e;
+
+  --nova-cream: #eee7da;
+  --nova-terracotta: #a65336;
+  --nova-espresso: #25221e;
+  --nova-muted: #777068;
+  --nova-border: rgba(37, 34, 30, 0.14);
+
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-mono: "Courier New", monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-nova-cream: var(--nova-cream);
+  --color-nova-terracotta: var(--nova-terracotta);
+  --color-nova-espresso: var(--nova-espresso);
+  --color-nova-muted: var(--nova-muted);
+  --color-nova-border: var(--nova-border);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Premium selection */
+::selection {
+  background: var(--nova-terracotta);
+  color: var(--background);
+}
+
+/* Small uppercase labels */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
