@@ -6,7 +6,6 @@ import { createClient } from "@/lib/supabase-browser";
 
 export default function AdminLogin() {
   const router = useRouter();
-  const supabase = createClient();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +19,9 @@ export default function AdminLogin() {
     setError("");
 
     try {
+      // Create Supabase client only when the user submits the form.
+      const supabase = createClient();
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -43,9 +45,7 @@ export default function AdminLogin() {
     } catch (err) {
       console.error("LOGIN EXCEPTION:", err);
       setError(
-        err instanceof Error
-          ? err.message
-          : "Unable to sign in."
+        err instanceof Error ? err.message : "Unable to sign in."
       );
       setLoading(false);
     }
