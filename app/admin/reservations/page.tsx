@@ -11,13 +11,8 @@ import {
   RefreshCw,
   LogOut,
 } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
 
 type Reservation = {
   id: string;
@@ -57,8 +52,6 @@ export default function ReservationsAdmin() {
       const data = await response.json();
 
       setReservations(data.reservations || []);
-
-      // Clear any previous/stale error after a successful request
       setError("");
     } catch (err) {
       setError(
@@ -169,6 +162,9 @@ export default function ReservationsAdmin() {
     try {
       setLoggingOut(true);
 
+      // Create the Supabase client only in the browser when logout is clicked.
+      const supabase = createClient();
+
       await supabase.auth.signOut();
 
       router.push("/admin/login");
@@ -228,11 +224,9 @@ export default function ReservationsAdmin() {
   return (
     <main className="min-h-screen bg-nova-espresso px-5 py-10 text-background sm:px-8 lg:px-12">
       <div className="mx-auto max-w-[1500px]">
-
         {/* HEADER */}
         <header className="border-b border-white/10 pb-8">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-
             <div>
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-orange-300" />
@@ -263,7 +257,6 @@ export default function ReservationsAdmin() {
                   size={13}
                   className={loading ? "animate-spin" : ""}
                 />
-
                 Refresh
               </button>
 
@@ -380,7 +373,6 @@ export default function ReservationsAdmin() {
           </div>
         ) : (
           <section className="mt-10 space-y-4">
-
             {/* TABLE HEADER */}
             <div className="hidden px-6 font-mono text-[8px] uppercase tracking-[0.2em] text-white/25 lg:grid lg:grid-cols-[1.3fr_1fr_1.2fr_auto] lg:gap-8">
               <span>Customer</span>
@@ -395,7 +387,6 @@ export default function ReservationsAdmin() {
                 className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.055]"
               >
                 <div className="flex flex-col gap-7 lg:grid lg:grid-cols-[1.3fr_1fr_1.2fr_auto] lg:items-center lg:gap-8">
-
                   {/* CUSTOMER */}
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-3">
@@ -437,7 +428,6 @@ export default function ReservationsAdmin() {
 
                   {/* DETAILS */}
                   <div className="grid grid-cols-3 gap-4">
-
                     <div>
                       <div className="flex items-center gap-2 text-white/30">
                         <CalendarDays size={14} />
@@ -486,7 +476,6 @@ export default function ReservationsAdmin() {
 
                   {/* ACTIONS */}
                   <div className="flex flex-wrap gap-2">
-
                     <button
                       type="button"
                       onClick={() =>
