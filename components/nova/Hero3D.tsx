@@ -1,6 +1,11 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { useEffect, useState } from "react";
 
 export function Hero3D() {
@@ -10,34 +15,34 @@ export function Hero3D() {
   const mouseY = useMotionValue(0);
 
   const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [8, -8]),
+    useTransform(mouseY, [-0.5, 0.5], [6, -6]),
     {
-      stiffness: 120,
-      damping: 20,
+      stiffness: 90,
+      damping: 24,
     }
   );
 
   const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-8, 8]),
+    useTransform(mouseX, [-0.5, 0.5], [-6, 6]),
     {
-      stiffness: 120,
-      damping: 20,
+      stiffness: 90,
+      damping: 24,
     }
   );
 
   const imageX = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-12, 12]),
+    useTransform(mouseX, [-0.5, 0.5], [-8, 8]),
     {
-      stiffness: 100,
-      damping: 25,
+      stiffness: 80,
+      damping: 28,
     }
   );
 
   const imageY = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [-12, 12]),
+    useTransform(mouseY, [-0.5, 0.5], [-8, 8]),
     {
-      stiffness: 100,
-      damping: 25,
+      stiffness: 80,
+      damping: 28,
     }
   );
 
@@ -58,18 +63,33 @@ export function Hero3D() {
   useEffect(() => {
     if (!isDesktop) return;
 
-    const handleMouseMove = (event: MouseEvent) => {
-      const x = event.clientX / window.innerWidth - 0.5;
-      const y = event.clientY / window.innerHeight - 0.5;
+    let animationFrame = 0;
+    let targetX = 0;
+    let targetY = 0;
 
-      mouseX.set(x);
-      mouseY.set(y);
+    const handleMouseMove = (event: MouseEvent) => {
+      targetX = event.clientX / window.innerWidth - 0.5;
+      targetY = event.clientY / window.innerHeight - 0.5;
+
+      if (!animationFrame) {
+        animationFrame = requestAnimationFrame(() => {
+          mouseX.set(targetX);
+          mouseY.set(targetY);
+          animationFrame = 0;
+        });
+      }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
     };
   }, [isDesktop, mouseX, mouseY]);
 
@@ -83,12 +103,13 @@ export function Hero3D() {
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
+          willChange: "transform",
         }}
         animate={{
-          y: [0, -10, 0],
+          y: [0, -8, 0],
         }}
         transition={{
-          duration: 5,
+          duration: 6,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -108,6 +129,7 @@ export function Hero3D() {
             x: imageX,
             y: imageY,
             transform: "translateZ(45px)",
+            willChange: "transform",
           }}
           className="absolute inset-0 overflow-hidden rounded-full border border-white/30 shadow-2xl"
         >
@@ -115,7 +137,7 @@ export function Hero3D() {
             className="h-full w-full bg-cover bg-center"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=90')",
+                "url('https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=65&fm=webp')",
             }}
           />
 
@@ -134,15 +156,16 @@ export function Hero3D() {
         {/* Small floating label */}
         <motion.div
           animate={{
-            y: [0, -5, 0],
+            y: [0, -4, 0],
           }}
           transition={{
-            duration: 3.5,
+            duration: 4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
           style={{
             transform: "translateZ(80px)",
+            willChange: "transform",
           }}
           className="absolute -bottom-5 -left-12 rounded-full border border-white/20 bg-black/35 px-4 py-2 backdrop-blur-xl"
         >

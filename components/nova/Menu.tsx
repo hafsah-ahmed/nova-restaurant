@@ -14,7 +14,7 @@ const menuItems = [
       "Creamy burrata, heirloom tomatoes, basil oil and smoked sea salt.",
     price: "2,450",
     image:
-      "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "01",
   },
   {
@@ -24,7 +24,7 @@ const menuItems = [
       "Hand-cut pasta, black truffle, aged parmesan and cultured butter.",
     price: "3,850",
     image:
-      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "02",
   },
   {
@@ -34,7 +34,7 @@ const menuItems = [
       "Line-caught sea bass, saffron broth, fennel and preserved lemon.",
     price: "4,250",
     image:
-      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "03",
   },
   {
@@ -44,7 +44,7 @@ const menuItems = [
       "Dark chocolate crémeux, roasted hazelnut and warm cocoa crumble.",
     price: "1,850",
     image:
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "04",
   },
   {
@@ -54,7 +54,7 @@ const menuItems = [
       "Silky cheesecake, vanilla cream and seasonal berry compote.",
     price: "1,650",
     image:
-      "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "05",
   },
   {
@@ -64,7 +64,7 @@ const menuItems = [
       "Double espresso, dark chocolate and a whisper of orange.",
     price: "950",
     image:
-      "https://images.unsplash.com/photo-1510707577719-ae7c14805e32?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1510707577719-ae7c14805e32?auto=format&fit=crop&w=800&q=65&fm=webp",
     number: "06",
   },
 ];
@@ -159,6 +159,7 @@ export function Menu() {
                   src={item.image}
                   alt={item.name}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
@@ -211,6 +212,7 @@ export function Menu() {
             className="group flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em]"
           >
             Reserve your table
+
             <ArrowUpRight
               size={14}
               strokeWidth={1.3}
